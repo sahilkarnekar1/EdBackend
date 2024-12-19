@@ -38,7 +38,9 @@ app.post('/addSchool', upload.single('image'), (req, res) => {
         res.status(201).send({ message: 'School added successfully' });
     });
 });
-
+app.get('/', (req, res) => {
+    res.send('Hello, World!');
+});
 // GET: Fetch Schools
 app.get('/getSchools', (req, res) => {
     const sql = 'SELECT id, name, address, city, image FROM schools';
