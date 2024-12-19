@@ -5,7 +5,17 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 
 const app = express();
-app.use(cors());
+
+// Configure CORS
+const corsOptions = {
+    origin: 'http://localhost:3000', // Replace with your frontend's URL
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+};
+app.use(cors(corsOptions));
+
+// Parse JSON body
 app.use(bodyParser.json());
 
 // MySQL connection setup
@@ -38,9 +48,12 @@ app.post('/addSchool', upload.single('image'), (req, res) => {
         res.status(201).send({ message: 'School added successfully' });
     });
 });
+
+// Root route
 app.get('/', (req, res) => {
     res.send('Hello, World!');
 });
+
 // GET: Fetch Schools
 app.get('/getSchools', (req, res) => {
     const sql = 'SELECT id, name, address, city, image FROM schools';
